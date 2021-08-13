@@ -1,0 +1,6 @@
+<h1>Add New Habit</h1>
+<%= form_with model: @habit, local: true do |f| %>
+    <%= f.label :name %>
+    <%= f.text_area :name %>
+    <%= f.submit %>
+<% end %>
