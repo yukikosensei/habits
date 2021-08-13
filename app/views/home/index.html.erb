@@ -1,10 +1,7 @@
-<nav class="navbar navbar-light bg-light">
-  <span class="navbar-brand mb-0 h1">Habit Streak</span>
-</nav>
 <section>
-  <%= link_to "New Habit", new_habit_path %>
+  <%= button_to "New Habit", new_habit_path, class: "btn btn-outline-primary button" %>
   
-  <table class="table">
+  <table class="table w-75 mx-auto">
     <thead>
       <tr>
         <th scope="col">Description</th>
@@ -16,7 +13,7 @@
       <% @habits.each do |habit| %>
         <tr>
           <td><%= habit.name %></td>
-          <td>1 day</td>
+          <td><%= habit.records.where(done: true).count %></td>
           <td><%= link_to "Edit", edit_habit_path(habit) %>/<%= link_to "Delete", habit_path(habit), method: :delete %></td>
         </tr>
       <% end %>
@@ -25,9 +22,9 @@
 </section>
 
 <section>
-  <%= button_to "Make a record", records_path, method: :post %>
+  <%= button_to "Make a record", records_path, method: :post, class: "btn btn-outline-primary button" %>
 
-  <table class="table table-bordered">
+  <table class="table table-bordered w-75 mx-auto">
   <thead>
     <tr>
       <th scope="col">date</th>
@@ -38,11 +35,13 @@
   <tbody>
     <% @records.each do |record| %>
       <tr>
-        <td><%= record.created_at %></td>
+        <td><%= record.created_at.strftime('%Y/%m/%d') %></td>
         <td><%= record.habit.name %></td>
         <td>
           <div class="form-check">
-            <%= check_box :record, :done, {class: "form-check-input"}, true, false %>
+            <%= form_with(model: record, local: true) do |record_form| %>
+              <%= record_form.check_box :done, {class: "form-check-input", data: {remote: true, url: record_path(record), method: :put}}, true, false %>
+            <% end %>
           </div>
         </td>
       </tr>

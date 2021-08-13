@@ -7,6 +7,13 @@ class RecordsController < ApplicationController
   end
 
   def update
+    record = Record.find(params[:id])
+    if record.done
+      record.update(done: false)
+    else
+      record.update(done: true)
+    end
+    redirect_to root_path
   end
 
   private
