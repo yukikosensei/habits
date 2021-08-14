@@ -6,7 +6,7 @@
       <tr>
         <th scope="col">Description</th>
         <th scope="col">Streak</th>
-        <th scope="col">Edit/Delete</th>
+        <th scope="col">Edit Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -14,7 +14,7 @@
         <tr>
           <td><%= habit.name %></td>
           <td><%= habit.records.where(done: true).count %></td>
-          <td><%= link_to "Edit", edit_habit_path(habit) %>/<%= link_to "Delete", habit_path(habit), method: :delete %></td>
+          <td><%= link_to "Edit", edit_habit_path(habit) %>  <%= link_to "Delete", habit_path(habit), method: :delete %></td>
         </tr>
       <% end %>
     </tbody>
@@ -24,7 +24,7 @@
 <section>
   <%= button_to "Make a record", records_path, method: :post, class: "btn btn-outline-primary button" %>
 
-  <table class="table table-bordered w-75 mx-auto">
+  <table class="table table-bordered w-75 mx-auto mb-5">
   <thead>
     <tr>
       <th scope="col">date</th>
@@ -46,6 +46,9 @@
         </td>
       </tr>
     <% end %>
+
+    <%#= paginate @records %>
+    <%== pagy_bootstrap_nav(@pagy) %>
   </tbody>
 </table>
 </section>
